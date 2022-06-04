@@ -34,6 +34,24 @@ function AddUser(props) {
         });
     }
 
+    const formatDate = (date) => {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+        if (month.length < 2) 
+            month = '0' + month;
+        if (day.length < 2) 
+            day = '0' + day;
+        return [year, month, day].join('-');
+    }
+
+    let max_date = new Date().setFullYear(new Date().getFullYear()-11);
+    max_date = formatDate(new Date(max_date))
+
+    let min_date = new Date().setFullYear(new Date().getFullYear()-100);
+    min_date = formatDate(new Date(min_date))
+
     return (
         <Form inline onSubmit={add}>
             <FormGroup row>
@@ -68,6 +86,8 @@ function AddUser(props) {
                     type="date"
                     value={user.date_of_birth}
                     onChange={inputsHandler}
+                    max = {max_date}
+                    min= {min_date}
                 />
             </FormGroup>
             {' '}
