@@ -1,5 +1,5 @@
 import React, { useState, Fragment } from 'react'
-import { Table, Button, Form } from 'reactstrap'
+import { Table, Form } from 'reactstrap'
 import ReadUserRow from './ReadUserRow'
 import EditUserRow from './EditUserRow'
 
@@ -29,7 +29,7 @@ function User(props) {
     }
 
     let users = usersModify.map(user => 
-            <Fragment>
+            <Fragment key={user.id}>
                 {editUserId === user.id ? <EditUserRow user={user} closeUserHandler={closeUserHandler} saveUserHandler={saveUserHandler}/> : <ReadUserRow user={user} removeUserHandler={props.removeUserHandler} editUserIdHandler={editUserIdHandler} />}
             </Fragment>
     )
