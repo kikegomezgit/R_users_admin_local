@@ -40,7 +40,7 @@ function User(props) {
                 <Table>
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            {/* <th>ID</th> */}
                             <th>Name</th>
                             <th>Email</th>
                             <th>Address</th>

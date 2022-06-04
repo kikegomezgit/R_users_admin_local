@@ -15,7 +15,7 @@ const EditUserRow = (props) => {
 
     return (
         <tr key={user.id}>
-            <th scope="row">{user.id}</th>
+            {/* <th scope="row">{user.id}</th> */}
             <td><Input
                 name="name"
                 placeholder="name"
@@ -45,8 +45,8 @@ const EditUserRow = (props) => {
                 onChange={inputsHandler}
             />  </td>
             <td>
-                <Button onClick={() => props.saveUserHandler(user)}>save</Button>
-                <Button onClick={() => props.closeUserHandler(null)}>close</Button>
+                <span className='buttons' onClick={() => props.saveUserHandler(user)}>save</span> 
+                <span className='buttons' onClick={() => props.closeUserHandler(null)}>close</span> 
             </td>
         </tr>
     )
