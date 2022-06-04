@@ -81,7 +81,7 @@ function AddUser(props) {
 
     return (
         <Container>
-        {showAdd ? (<div ><Alert>Signed in succesfully</Alert></div>) : <div></div>}
+        {showAdd ? (<div ><Alert>Record added in succesfully</Alert></div>) : <div></div>}
         <Form inline onSubmit={add}>
             <FormGroup row>
             <Label for="name" sm={2}>Name</Label>

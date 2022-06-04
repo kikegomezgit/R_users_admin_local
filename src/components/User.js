@@ -1,5 +1,5 @@
 import React, { useState, Fragment } from 'react'
-import { Table, Form } from 'reactstrap'
+import { Table, Form, Container } from 'reactstrap'
 import ReadUserRow from './ReadUserRow'
 import EditUserRow from './EditUserRow'
 
@@ -10,7 +10,7 @@ function User(props) {
 
     const editUserIdHandler = id => {
         setEditUserId(id)
-      }
+    }
     const closeUserHandler = state => {
         setEditUserId(state)
     }
@@ -28,28 +28,30 @@ function User(props) {
         );
     }
 
-    let users = usersModify.map(user => 
-            <Fragment key={user.id}>
-                {editUserId === user.id ? <EditUserRow user={user} closeUserHandler={closeUserHandler} saveUserHandler={saveUserHandler}/> : <ReadUserRow user={user} removeUserHandler={props.removeUserHandler} editUserIdHandler={editUserIdHandler} />}
-            </Fragment>
+    let users = usersModify.map(user =>
+        <Fragment key={user.id}>
+            {editUserId === user.id ? <EditUserRow user={user} closeUserHandler={closeUserHandler} saveUserHandler={saveUserHandler} /> : <ReadUserRow user={user} removeUserHandler={props.removeUserHandler} editUserIdHandler={editUserIdHandler} />}
+        </Fragment>
     )
 
     return (
-        <Form>
-            <Table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Address</th>
-                        <th>Day of birth</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>{users.length >= 1 ? users : message}</tbody>
-            </Table>
-        </Form>
+        <Container>
+            <Form>
+                <Table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Address</th>
+                            <th>Dayofbirth</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>{users.length >= 1 ? users : message}</tbody>
+                </Table>
+            </Form>
+        </Container>
     )
 }
 

@@ -14,7 +14,6 @@ const EditUserRow = (props) => {
     }
 
     return (
-
         <tr key={user.id}>
             <th scope="row">{user.id}</th>
             <td><Input
@@ -50,7 +49,6 @@ const EditUserRow = (props) => {
                 <Button onClick={() => props.closeUserHandler(null)}>close</Button>
             </td>
         </tr>
-
     )
 }
 
