@@ -1,3 +1,7 @@
 * {
     background-color: lightslategray;
 }
+
+.inputError {
+    color: lightcoral
+}

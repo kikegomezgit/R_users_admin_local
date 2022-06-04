@@ -1,29 +1,39 @@
-import React, { useState } from 'react'
-import { Form, FormGroup, Input, Button, Label } from 'reactstrap';
+import React, { useState, useEffect} from 'react'
+import { Form, FormGroup, Input, Button, Label, Container, Alert} from 'reactstrap';
 
 function AddUser(props) {
     const [user, setUser] = useState({ name: "", email: "", address: "", date_of_birth: "" });
+    const [userErrors, setUserErrors] = useState({});
+    const [isSubmit, setIsSubmit] = useState(false);
+    const [showAdd, setShowAdd] = useState(false);
+
+    const {addUserHandler} = props
 
     const add = (e) => {
         e.preventDefault();
-        if (user.name === "") {
-            alert("please fill the field")
-            return
+        setUserErrors(validateInputs(user))
+        setIsSubmit(true)
+    }
+
+    const validateInputs = ({name, email, address, date_of_birth}) => {
+        const errors = {}
+        if (!name) {
+            errors.name = "Name is required"
+        } else if (name.length > 35 ) {
+            errors.name = "Name exceeded 35 letters"
+        }else if (name.length < 7 ) {
+            errors.name = "Name must be atleast 7 letters"
         }
-        if (user.email === "") {
-            alert("please fill the field")
-            return
+        if (!email) {
+            errors.email = "email is required"
         }
-        if (user.address === "") {
-            alert("please fill the field")
-            return
+        if (!address) {
+            errors.address = "address is required"
         }
-        if (user.date_of_birth === "") {
-            alert("please fill the field")
-            return
+        if (!date_of_birth) {
+            errors.date_of_birth = "date_of_birth is required"
         }
-        props.addUserHandler(user)
-        setUser({ name: "", email: "", address: "", date_of_birth: "" })
+        return errors
     }
 
     const inputsHandler = (e) => {
@@ -33,6 +43,23 @@ function AddUser(props) {
             [name]: value.toLowerCase(),
         });
     }
+
+    useEffect(()=> {
+        if(Object.keys(userErrors).length === 0 && isSubmit) {
+            setIsSubmit(false)
+            addUserHandler(user)
+            setUser({ name: "", email: "", address: "", date_of_birth: "" })
+            setShowAdd(true)
+        }
+    },[userErrors,isSubmit,showAdd,user, addUserHandler])
+
+    useEffect(()=> {
+        if(showAdd) {
+            setTimeout(function() {
+                setShowAdd(false)
+          }, 3000);
+        }
+    },[showAdd])
 
     const formatDate = (date) => {
         var d = new Date(date),
@@ -53,6 +80,8 @@ function AddUser(props) {
     min_date = formatDate(new Date(min_date))
 
     return (
+        <Container>
+        {showAdd ? (<div ><Alert>Signed in succesfully</Alert></div>) : <div></div>}
         <Form inline onSubmit={add}>
             <FormGroup row>
             <Label for="name" sm={2}>Name</Label>
@@ -63,6 +92,7 @@ function AddUser(props) {
                     value={user.name}
                     onChange={inputsHandler}
                 />
+                <p className='inputError'>{userErrors.name}</p>
                 <Label for="email">Email</Label>
                 <Input
                     name="email"
@@ -71,6 +101,7 @@ function AddUser(props) {
                     value={user.email}
                     onChange={inputsHandler}
                 />
+                <p className='inputError'>{userErrors.email}</p>
                 <Label for="address">Address</Label>
                 <Input
                     name="address"
@@ -79,6 +110,7 @@ function AddUser(props) {
                     value={user.address}
                     onChange={inputsHandler}
                 />
+                <p className='inputError'>{userErrors.address}</p>
                 <Label for="date_of_birth">Date of birth</Label>
                 <Input
                     name="date_of_birth"
@@ -89,12 +121,15 @@ function AddUser(props) {
                     max = {max_date}
                     min= {min_date}
                 />
+                <p className='inputError'>{userErrors.date_of_birth}</p>
             </FormGroup>
             {' '}
             <Button>
                 Add
             </Button>
         </Form>
+        </Container>
+
     )
 }
 
